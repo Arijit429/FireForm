@@ -60,12 +60,11 @@ class LLM:
             }
 
             try:
-                response = requests.post(ollama_url, json=payload)
+                response = requests.post(ollama_url, json=payload, timeout=30)
                 response.raise_for_status()
-            except requests.exceptions.ConnectionError:
-                raise ConnectionError(
-                    f"Could not connect to Ollama at {ollama_url}. "
-                    "Please ensure Ollama is running and accessible."
+            except requests.exceptions.Timeout:
+                raise TimeoutError(
+                    f"Ollama request timed out after 30 seconds at {ollama_url}"
                 )
             except requests.exceptions.HTTPError as e:
                 raise RuntimeError(f"Ollama returned an error: {e}")
