@@ -1,10 +1,7 @@
 import os
-import logging
 from src.filler import Filler
 from src.llm import LLM
 
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 class FileManipulator:
     def __init__(self):
@@ -31,14 +28,14 @@ class FileManipulator:
         It receives the raw data, runs the PDF filling logic,
         and returns the path to the newly created file.
         """
-        logger.info("[1] Received request from frontend.")
+        print("[1] Received request from frontend.")
         print(f"[2] PDF template path: {pdf_form_path}")
 
         if not os.path.exists(pdf_form_path):
             print(f"Error: PDF template not found at {pdf_form_path}")
             return None  # Or raise an exception
 
-        logger.info("[3] Starting extraction...")
+        print("[3] Starting extraction and PDF filling process...")
         try:
             self.llm._target_fields = fields
             self.llm._transcript_text = user_input
