@@ -20,6 +20,8 @@ const elements = {
   inputText: document.getElementById("inputText"),
   fillFormMessage: document.getElementById("fillFormMessage"),
   fillFormResponse: document.getElementById("fillFormResponse"),
+  createTemplateBtn: document.getElementById("createTemplateBtn"),
+  fillFormBtn: document.getElementById("fillFormBtn"),
   templatesEmpty: document.getElementById("templatesEmpty"),
   templatesList: document.getElementById("templatesList"),
   localPdfFile: document.getElementById("localPdfFile"),
@@ -255,6 +257,8 @@ async function handleTemplateSubmit(event) {
   }
 
   isTemplateSubmitting = true;
+  elements.createTemplateBtn.disabled = true;
+  elements.createTemplateBtn.textContent = "Creating...";
 
   clearJson(elements.templateFormResponse);
   setStatus(elements.templateFormMessage, "");
@@ -322,6 +326,8 @@ async function handleTemplateSubmit(event) {
     setStatus(elements.templateFormMessage, error.message, "error");
   } finally {
     isTemplateSubmitting = false;
+    elements.createTemplateBtn.disabled = false;
+    elements.createTemplateBtn.textContent = "Create Template";
   }
 }
 
@@ -353,6 +359,8 @@ async function handleFillSubmit(event) {
   }
 
   isFillSubmitting = true;
+  elements.fillFormBtn.disabled = true;
+  elements.fillFormBtn.textContent = "Submitting...";
 
   clearJson(elements.fillFormResponse);
   setStatus(elements.fillFormMessage, "");
@@ -408,7 +416,9 @@ async function handleFillSubmit(event) {
   } catch (error) {
     setStatus(elements.fillFormMessage, error.message, "error");
   } finally {
-    isFillSubmitting = false;
+        isFillSubmitting = false;
+    elements.fillFormBtn.disabled = false;
+    elements.fillFormBtn.textContent = "Fill Form";
   }
 }
 
